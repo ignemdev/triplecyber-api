@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using Movies.Core.DTOs;
 using Movies.Core.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,22 +14,39 @@ namespace Movies.Services
     public class MoviesServices : IMoviesServices
     {
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public MoviesServices(IConfiguration configuration)
+        public MoviesServices(IConfiguration configuration, IMapper mapper)
         {
             _configuration = configuration;
+            _mapper = mapper;
         }    
 
-        public Task<MovieDetailResponse> GetMovieByIdAsync(int id)
+        public async Task<MovieDetailResponse> GetMovieByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<MovieResponse<MovieDetailResponse>> GetMoviesByPageAsync(int page)
+        public async Task<MovieResponse<MovieDetailResponse>> GetMoviesByPageAsync(int page)
         {
-            throw new NotImplementedException();
+            string moviesJson = await GetRequestResult("top_rated", $"page={page}","language=en-US");
+            return null;
         }
 
+        private async Task<string> GetRequestResult(string endpoint, params string[] query)
+        {
+            using var client = new HttpClient();
+
+            var queryParams = query.ToList();
+            queryParams.Add($"api_key={_configuration["TheMovieDb:ApiKey"]}");
+
+            client.BaseAddress = new Uri($"{_configuration["TheMovieDb:BaseAddress"]}{endpoint}");
+
+            var response = await client.GetAsync($"?{string.Join("&", queryParams)}");
+            var result = await response.Content.ReadAsStringAsync();
+
+            return result;
+        }
 
     }
 }
