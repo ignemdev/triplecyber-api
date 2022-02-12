@@ -6,4 +6,8 @@
 	  <DocumentationFile>documentation.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Movies.Core\Movies.Core.csproj" />
+  </ItemGroup>
+
 </Project>

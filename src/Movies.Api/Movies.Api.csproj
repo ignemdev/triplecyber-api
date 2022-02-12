@@ -11,5 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Movies.Core\Movies.Core.csproj" />
+    <ProjectReference Include="..\Movies.Services\Movies.Services.csproj" />
+  </ItemGroup>
+
 
 </Project>
