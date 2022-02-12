@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Movies.Core.Services;
 using System.Threading.Tasks;
 
 namespace Movies.Api.Controllers
@@ -7,9 +8,11 @@ namespace Movies.Api.Controllers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        public MoviesController()
-        {
+        private readonly IMoviesServices _moviesServices;
 
+        public MoviesController(IMoviesServices moviesServices)
+        {
+            _moviesServices = moviesServices;
         }
 
         [HttpGet]

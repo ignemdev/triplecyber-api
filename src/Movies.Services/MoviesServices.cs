@@ -1,4 +1,5 @@
-﻿using Movies.Core.DTOs;
+﻿using Microsoft.Extensions.Configuration;
+using Movies.Core.DTOs;
 using Movies.Core.Services;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,11 @@ namespace Movies.Services
 {
     public class MoviesServices : IMoviesServices
     {
-        public MoviesServices()
-        {
+        private readonly IConfiguration _configuration;
 
+        public MoviesServices(IConfiguration configuration)
+        {
+            _configuration = configuration;
         }    
 
         public Task<MovieDetailResponse> GetMovieByIdAsync(int id)
@@ -23,5 +26,7 @@ namespace Movies.Services
         {
             throw new NotImplementedException();
         }
+
+
     }
 }
