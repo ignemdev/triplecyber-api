@@ -35,7 +35,10 @@ namespace Movies.Api
                 .AddNewtonsoftJson(x =>
                 {
                     x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                    x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    x.SerializerSettings.ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new CamelCaseNamingStrategy()
+                    };
                 });
 
             services.AddSwaggerGen(c =>
