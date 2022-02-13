@@ -8,6 +8,7 @@ namespace Movies.Core.DTOs
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public string ShortTitle { get { return this.Title.GetShortTitle(); } }
         public string OriginalTitle { get; set; }
         public string Overview { get; set; }
         public string PosterPath { get; set; }
